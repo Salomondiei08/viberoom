@@ -28,7 +28,7 @@ export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  useEffect(() => { fetch("/api/applications").then((response) => response.json()).then((data: Application[]) => { setApplications(data); if (data[0]) setSelectedId(data[0].id); }).catch(() => undefined); }, []);
+  useEffect(() => { fetch("/api/applications").then((response) => response.json()).then((data: Application[] | { error?: string }) => { if (!Array.isArray(data)) return; setApplications(data); if (data[0]) setSelectedId(data[0].id); }).catch(() => undefined); }, []);
   const selected = applications.find((item) => item.id === selectedId) ?? applications[0];
   const visibleApplications = useMemo(() => filter === "Toutes" ? applications : applications.filter((item) => item.status === filter), [applications, filter]);
 

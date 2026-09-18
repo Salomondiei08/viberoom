@@ -5,6 +5,10 @@
 - Clarified that projects are submitted online, then tested and reviewed without the creator needing to attend the TikTok LIVE.
 - Replaced legacy demo submissions with AI and vibe-coding project examples.
 
+## 0.3.1 — 2026-09-19
+
+- Fixed the public page crash caused by treating the protected dashboard error response as an application list.
+
 ## 0.1.0 — 2026-09-19
 
 - Added the LiveRoom public casting landing page with an animated hero and application flow.
