@@ -1,5 +1,10 @@
 # Version history
 
+## 0.3.0 — 2026-09-19
+
+- Clarified that projects are submitted online, then tested and reviewed without the creator needing to attend the TikTok LIVE.
+- Replaced legacy demo submissions with AI and vibe-coding project examples.
+
 ## 0.1.0 — 2026-09-19
 
 - Added the LiveRoom public casting landing page with an animated hero and application flow.
