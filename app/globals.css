@@ -54,6 +54,12 @@ body, button, input, textarea { font-family: Arial, Helvetica, sans-serif; }
 .public-link,.logout-link { width:100%; display:flex; align-items:center; justify-content:space-between; padding:12px 10px; color:#cdd4cf; background:none; text-align:left; font-size:11px; }
 .public-link:hover,.logout-link:hover { color:#fff; background:rgba(255,255,255,.09); }
 .logout-link { margin-top:4px; color:#9ba9a1; }
+.hero .tiktok-banner { display:none; }
+.live-event-link { top:16px; right:50%; bottom:auto; transform:translateX(50%); display:flex; align-items:center; gap:8px; color:#fff; background:var(--coral); }
+.live-event-link .live-dot { width:7px; height:7px; background:#fff; box-shadow:0 0 0 4px rgba(255,255,255,.18); }
+.live-event-link > span:last-child { color:#fff; font-weight:400; }
+.live-event-link:hover { background:var(--deep); }
+@media (max-width:640px) { .live-event-link { top:10px; right:10px; transform:none; padding:9px 10px; font-size:10px; }.live-event-link > span:last-child { display:none; } }
 .creator-section { display:grid; grid-template-columns:.8fr 1.2fr; gap:12%; align-items:center; background:#efe8df; }
 .creator-copy h2 { margin:22px 0; color:var(--ink); font-size:clamp(42px,6vw,76px); line-height:.94; letter-spacing:-.07em; font-weight:500; }
 .creator-copy h2 em { color:var(--coral); font-family:'Playfair Display',serif; font-style:normal; }

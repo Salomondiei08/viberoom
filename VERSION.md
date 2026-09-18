@@ -18,6 +18,7 @@
 
 - Added a prominent Salomon | AI and Code creator section with the official TikTok creator embed and direct profile links.
 - Added verified profile copy and links to the live-announcement and vibe-coding TikTok videos.
+- Replaced the generic TikTok banner with a direct event link for Saturday 19 at 14h GMT.
 
 ## 0.1.0 — 2026-09-19
 

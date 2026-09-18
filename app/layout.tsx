@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="fr">
-      <body><a className="tiktok-profile" href="https://www.tiktok.com/@salomondiei" target="_blank" rel="noreferrer">Salomon | AI and Code · TikTok LIVE @salomondiei <span>↗</span></a><a className="creator-credit" href="https://www.tiktok.com/@salomondiei" target="_blank" rel="noreferrer">Créé par Salomon · Voir mes vidéos TikTok ↗</a>{children}<Script src="https://www.tiktok.com/embed.js" strategy="afterInteractive" /></body>
+      <body><a className="tiktok-profile live-event-link" href="https://www.tiktok.com/live/event/7687004710078939143?enter_from=personal_live_event_card" target="_blank" rel="noreferrer"><span className="live-dot" /> Live TikTok · samedi 19 à 14h GMT <span>Ouvrir le live ↗</span></a><a className="creator-credit" href="https://www.tiktok.com/@salomondiei" target="_blank" rel="noreferrer">Créé par Salomon · Voir mon TikTok ↗</a>{children}<Script src="https://www.tiktok.com/embed.js" strategy="afterInteractive" /></body>
     </html>
   );
 }
