@@ -1,0 +1,13 @@
+services:
+  viberoom:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3006:3000"
+    environment:
+      NODE_ENV: production
+      ADMIN_EMAIL: ${ADMIN_EMAIL}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      AUTH_SECRET: ${AUTH_SECRET}
+    volumes:
+      - ./data:/app/data
