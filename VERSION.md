@@ -1,5 +1,9 @@
 # Version history
 
+## 0.3.2 — 2026-09-19
+
+- Removed the generic TikTok banner and fictional hero project counter; the official live-event link is now the single live call to action.
+
 ## 0.3.0 — 2026-09-19
 
 - Clarified that projects are submitted online, then tested and reviewed without the creator needing to attend the TikTok LIVE.
