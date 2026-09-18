@@ -17,6 +17,7 @@
 ## 0.5.0 — 2026-09-19
 
 - Added a prominent Salomon | AI and Code creator section with the official TikTok creator embed and direct profile links.
+- Added verified profile copy and links to the live-announcement and vibe-coding TikTok videos.
 
 ## 0.1.0 — 2026-09-19
 
