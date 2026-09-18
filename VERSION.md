@@ -9,6 +9,11 @@
 
 - Fixed the public page crash caused by treating the protected dashboard error response as an application list.
 
+## 0.4.0 — 2026-09-19
+
+- Added duplicate-submit protection and a clear animated confirmation after a project is received.
+- Simplified the private dashboard by removing fictional capacity, pulse, guest, episode, topic, and host-guide elements.
+
 ## 0.1.0 — 2026-09-19
 
 - Added the LiveRoom public casting landing page with an animated hero and application flow.

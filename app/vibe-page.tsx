@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, Check, Code2, Play, Send, Sparkles, Trophy } from "lucide-react";
 import DashboardFr from "./dashboard";
 import Login from "./login";
@@ -11,6 +11,8 @@ export default function VibePage() {
   const [applications, setApplications] = useState<Application[]>([]);
   const [selectedId, setSelectedId] = useState(0);
   const [submitted, setSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+  const submittingRef = useRef(false);
   const [auth, setAuth] = useState<"checking" | "logged-out" | "logged-in">("checking");
   const [authError, setAuthError] = useState("");
 
@@ -48,14 +50,20 @@ export default function VibePage() {
 
   const submit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (submittingRef.current || submitted) return;
+    submittingRef.current = true;
+    setSubmitError("");
     const form = new FormData(event.currentTarget);
     const payload = { name: String(form.get("name")), location: String(form.get("location")), focus: String(form.get("project")), bio: `${String(form.get("description"))} — Dépôt : ${String(form.get("repository"))}` };
-    fetch("/api/applications", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) }).then((response) => response.json()).then((application: Application) => {
+    fetch("/api/applications", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) }).then(async (response) => {
+      if (!response.ok) throw new Error("Impossible d’envoyer le projet pour le moment.");
+      return response.json();
+    }).then((application: Application) => {
       setApplications((current) => [application, ...current]);
       setSelectedId(application.id);
       setSubmitted(true);
       event.currentTarget.reset();
-    }).catch(() => undefined);
+    }).catch((error: Error) => setSubmitError(error.message)).finally(() => { submittingRef.current = false; });
   };
 
   const selected = applications.find((application) => application.id === selectedId) ?? applications[0];
