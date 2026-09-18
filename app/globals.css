@@ -54,3 +54,16 @@ body, button, input, textarea { font-family: Arial, Helvetica, sans-serif; }
 .public-link,.logout-link { width:100%; display:flex; align-items:center; justify-content:space-between; padding:12px 10px; color:#cdd4cf; background:none; text-align:left; font-size:11px; }
 .public-link:hover,.logout-link:hover { color:#fff; background:rgba(255,255,255,.09); }
 .logout-link { margin-top:4px; color:#9ba9a1; }
+.creator-section { display:grid; grid-template-columns:.8fr 1.2fr; gap:12%; align-items:center; background:#efe8df; }
+.creator-copy h2 { margin:22px 0; color:var(--ink); font-size:clamp(42px,6vw,76px); line-height:.94; letter-spacing:-.07em; font-weight:500; }
+.creator-copy h2 em { color:var(--coral); font-family:'Playfair Display',serif; font-style:normal; }
+.creator-copy p { max-width:390px; margin:0 0 28px; color:#69736c; font-size:15px; line-height:1.65; }
+.creator-profile-card { min-height:250px; padding:18px; border:1px solid rgba(24,35,31,.12); background:#fff; }
+.creator-profile-card .tiktok-embed { min-width:288px; max-width:780px; margin:0 auto !important; }
+.creator-profile-fallback { display:flex; align-items:center; gap:12px; min-height:74px; padding:12px 8px 0; color:var(--ink); }
+.creator-avatar { width:48px; height:48px; display:grid; place-items:center; border-radius:50%; color:#fff; background:var(--deep); font-size:20px; }
+.creator-profile-fallback strong,.creator-profile-fallback span { display:block; }
+.creator-profile-fallback span { margin-top:4px; color:#7a827b; font-size:12px; }
+.creator-profile-fallback a { margin-left:auto; color:var(--coral); font-size:22px; }
+.footer a { color:inherit; }
+@media (max-width:640px) { .creator-section { display:block; padding-top:82px; padding-bottom:82px; }.creator-profile-card { margin-top:42px; padding:10px; } }

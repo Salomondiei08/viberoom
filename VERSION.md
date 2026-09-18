@@ -14,6 +14,10 @@
 - Added duplicate-submit protection and a clear animated confirmation after a project is received.
 - Simplified the private dashboard by removing fictional capacity, pulse, guest, episode, topic, and host-guide elements.
 
+## 0.5.0 — 2026-09-19
+
+- Added a prominent Salomon | AI and Code creator section with the official TikTok creator embed and direct profile links.
+
 ## 0.1.0 — 2026-09-19
 
 - Added the LiveRoom public casting landing page with an animated hero and application flow.

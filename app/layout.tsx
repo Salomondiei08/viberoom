@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -9,7 +10,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="fr">
-      <body><a className="tiktok-profile" href="https://www.tiktok.com/@salomondiei" target="_blank" rel="noreferrer">Salomon | AI and Code · TikTok LIVE @salomondiei <span>↗</span></a><a className="creator-credit" href="https://www.tiktok.com/@salomondiei" target="_blank" rel="noreferrer">Créé par Salomon · Voir mes vidéos TikTok ↗</a>{children}</body>
+      <body><a className="tiktok-profile" href="https://www.tiktok.com/@salomondiei" target="_blank" rel="noreferrer">Salomon | AI and Code · TikTok LIVE @salomondiei <span>↗</span></a><a className="creator-credit" href="https://www.tiktok.com/@salomondiei" target="_blank" rel="noreferrer">Créé par Salomon · Voir mes vidéos TikTok ↗</a>{children}<Script src="https://www.tiktok.com/embed.js" strategy="afterInteractive" /></body>
     </html>
   );
 }
