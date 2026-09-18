@@ -1,0 +1,6 @@
+[
+  {"id":1,"name":"Mariam Koné","handle":"@mariam.kone","location":"Abidjan, CI","focus":"Entreprendre en public","bio":"Je construis une petite marque alimentaire depuis la cuisine de ma mère. J’aimerais parler honnêtement du fait de commencer avant de se sentir prêt.","status":"Nouveau","color":"#ec6d4f","initials":"MK","time":"il y a 8 min"},
+  {"id":2,"name":"Daniel Owusu","handle":"@danielmakes","location":"Accra, GH","focus":"Processus créatif","bio":"Je fabrique des meubles à partir de bois récupéré et j’enseigne ce métier à de jeunes créateurs.","status":"Sélectionné","color":"#7b75e8","initials":"DO","time":"il y a 42 min"},
+  {"id":3,"name":"Aïcha Traoré","handle":"@aichaspeaks","location":"Bouaké, CI","focus":"Communauté et culture","bio":"Les meilleures histoires sont souvent cachées à la vue de tous. Je veux montrer le génie du quotidien dans nos villes.","status":"À étudier","color":"#dca14a","initials":"AT","time":"il y a 1 h"},
+  {"id":4,"name":"Yannick N’Guessan","handle":"@yn.live","location":"Yamoussoukro, CI","focus":"Changer de voie","bio":"De l’ingénierie à la mode : c’est le chapitre où j’arrête de demander la permission.","status":"Nouveau","color":"#4e9c83","initials":"YN","time":"il y a 2 h"}
+]
