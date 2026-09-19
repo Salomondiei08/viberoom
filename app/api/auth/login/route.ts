@@ -1,13 +1,16 @@
 import { NextResponse } from "next/server";
-import { cookieName, createSession } from "../../../../lib/auth";
-
-export const POST = async (request: Request) => {
-  const { email, password } = await request.json() as { email?: string; password?: string };
-  const expectedEmail = process.env.ADMIN_EMAIL;
-  const expectedPassword = process.env.ADMIN_PASSWORD;
-  if (!expectedEmail || !expectedPassword) return NextResponse.json({ error: "Le compte administrateur n’est pas configuré sur le serveur." }, { status: 503 });
-  if (email !== expectedEmail || password !== expectedPassword) return NextResponse.json({ error: "Email ou mot de passe incorrect." }, { status: 401 });
-  const response = NextResponse.json({ ok: true });
-  response.cookies.set(cookieName, createSession(email as string), { httpOnly: true, sameSite: "lax", secure: process.env.NODE_ENV === "production", maxAge: 60 * 60 * 24 * 7, path: "/" });
-  return response;
-};
+import { z } from "zod";
+import { cookieName, createSession, sessionSeconds, validCredentials } from "../../../../lib/auth";
+import { apiError, HttpError, rateLimit, readJson, requireSameOrigin } from "../../../../lib/http";
+const schema = z.object({ email: z.string().trim().email().max(254), password: z.string().min(1).max(256) }).strict();
+export async function POST(request: Request) {
+  try {
+    requireSameOrigin(request);
+    await rateLimit(request, "login", 8, 15 * 60 * 1000);
+    const { email, password } = schema.parse(await readJson(request, 4096));
+    if (!validCredentials(email, password)) throw new HttpError(401, "Email ou mot de passe incorrect.");
+    const response = NextResponse.json({ ok: true });
+    response.cookies.set(cookieName, await createSession(email), { httpOnly: true, sameSite: "strict", secure: process.env.NODE_ENV === "production", maxAge: sessionSeconds, path: "/" });
+    return response;
+  } catch (error) { return apiError(error); }
+}

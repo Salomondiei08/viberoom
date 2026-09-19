@@ -1,6 +1,0 @@
-[
-  {"id":1,"name":"Mariam Koné","handle":"@mariam.codes","location":"Abidjan, CI","focus":"Coach IA pour petites entreprises","bio":"Un assistant qui aide les petites entreprises à transformer leurs idées en plans d’action simples, avec une interface conçue en vibe coding.","status":"Nouveau","color":"#ec6d4f","initials":"MK","time":"il y a 8 min"},
-  {"id":2,"name":"Daniel Owusu","handle":"@danielbuilds","location":"Accra, GH","focus":"Dashboard de suivi de projets","bio":"Un espace qui rassemble les tâches, les notes et les décisions d’une équipe dans une interface rapide et lisible.","status":"Sélectionné","color":"#7b75e8","initials":"DO","time":"il y a 42 min"},
-  {"id":3,"name":"Aïcha Traoré","handle":"@aicha.dev","location":"Bouaké, CI","focus":"Agent IA pour réviser du code","bio":"Un outil qui explique les erreurs, propose des pistes d’amélioration et aide les débutants à comprendre leur propre code.","status":"À étudier","color":"#dca14a","initials":"AT","time":"il y a 1 h"},
-  {"id":4,"name":"Yannick N’Guessan","handle":"@yannick.codes","location":"Yamoussoukro, CI","focus":"Application de réservation locale","bio":"Une expérience mobile pour trouver et réserver des services locaux, créée rapidement avec l’aide de l’IA.","status":"Nouveau","color":"#4e9c83","initials":"YN","time":"il y a 2 h"}
-]

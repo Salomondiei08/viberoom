@@ -1,16 +1,12 @@
 import type { Metadata } from "next";
-import Script from "next/script";
+import LiveBanner from "./live-banner";
 import "./globals.css";
-
 export const metadata: Metadata = {
-  title: "VibeRoom — Montre ce que tu as construit",
-  description: "VibeRoom, connecté à ton univers TikTok : les développeurs soumettent leurs projets vibe-coded pour une analyse en direct.",
+  metadataBase: new URL("https://vibecode.reinvent-labs.com"),
+  title: "VibeRoom — Tes projets en live avec Salomon",
+  description: "Soumets ton application ou ton SaaS. Salomon, IA & Code, le teste sur TikTok et partage des pistes pour l’améliorer avec la communauté.",
+  openGraph: { title: "VibeRoom — Tes projets en live avec Salomon", description: "Fais découvrir ton projet et reçois des retours concrets pendant le live TikTok.", locale: "fr_FR", type: "website" },
 };
-
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return (
-    <html lang="fr">
-      <body><a className="tiktok-profile live-event-link" href="https://www.tiktok.com/live/event/7687004710078939143?enter_from=personal_live_event_card" target="_blank" rel="noreferrer"><span className="live-dot" /> Live TikTok · samedi 19 à 14h GMT <span>Ouvrir le live ↗</span></a><a className="creator-credit" href="https://www.tiktok.com/@salomondiei" target="_blank" rel="noreferrer">Créé par Salomon · Voir mon TikTok ↗</a>{children}<Script src="https://www.tiktok.com/embed.js" strategy="afterInteractive" /></body>
-    </html>
-  );
+  return <html lang="fr"><body><a className="skip-link" href="#main">Aller au contenu</a><LiveBanner />{children}</body></html>;
 }

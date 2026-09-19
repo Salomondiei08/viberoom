@@ -1,45 +1,37 @@
-import { promises as fs } from "node:fs";
-import path from "node:path";
 import { NextResponse } from "next/server";
-import { cookieName, verifySession } from "../../../lib/auth";
-
-const dataPath = path.join(process.cwd(), "data", "applications.json");
-
-type Application = Record<string, unknown> & { id: number };
-
-const readApplications = async (): Promise<Application[]> => {
+import { requireAdmin } from "../../../lib/auth";
+import { Application, canonicalProjectUrl, isApplication, projectUrl, submissionSchema } from "../../../lib/applications";
+import { changeStore, readStore } from "../../../lib/storage";
+import { apiError, rateLimit, readJson, requireSameOrigin } from "../../../lib/http";
+export const dynamic = "force-dynamic";
+export async function GET(request: Request) {
   try {
-    return JSON.parse(await fs.readFile(dataPath, "utf8")) as Application[];
-  } catch {
-    await fs.mkdir(path.dirname(dataPath), { recursive: true });
-    await fs.writeFile(dataPath, "[]", "utf8");
-    return [];
-  }
-};
-
-const writeApplications = async (applications: Application[]) => {
-  await fs.mkdir(path.dirname(dataPath), { recursive: true });
-  await fs.writeFile(dataPath, JSON.stringify(applications, null, 2), "utf8");
-};
-
-export const GET = async (request: Request) => { if (!verifySession(request.headers.get("cookie")?.match(new RegExp(`${cookieName}=([^;]+)`))?.[1])) return NextResponse.json({ error: "Accès administrateur requis." }, { status: 401 }); return NextResponse.json(await readApplications()); };
-
-export const POST = async (request: Request) => {
-  const body = await request.json() as Omit<Application, "id">;
-  if (!body.name || !body.location || !body.focus || !body.bio) {
-    return NextResponse.json({ error: "Les champs obligatoires sont incomplets." }, { status: 400 });
-  }
-  const applications = await readApplications();
-  const name = String(body.name);
-  const application: Application = {
-    ...body,
-    id: Date.now(),
-    handle: `@${name.toLowerCase().trim().replace(/\s+/g, ".")}`,
-    status: "Nouveau",
-    color: "#c55a91",
-    initials: name.split(/\s+/).map((word) => word[0]).join("").slice(0, 2).toUpperCase(),
-    time: "à l’instant",
-  };
-  await writeApplications([application, ...applications]);
-  return NextResponse.json(application, { status: 201 });
-};
+    await requireAdmin(request);
+    const applications = await readStore<Application[]>("applications.json", []);
+    if (!Array.isArray(applications) || !applications.every(isApplication)) throw new Error("Invalid store");
+    return NextResponse.json(applications, { headers: { "Cache-Control": "no-store" } });
+  } catch (error) { return apiError(error); }
+}
+export async function POST(request: Request) {
+  try {
+    requireSameOrigin(request);
+    await rateLimit(request, "submit", 10, 15 * 60 * 1000);
+    const body = submissionSchema.parse(await readJson(request));
+    const result = await changeStore<Application[], { duplicate: boolean }>("applications.json", [], applications => {
+      if (!Array.isArray(applications) || !applications.every(isApplication)) throw new Error("Invalid store");
+      const key = canonicalProjectUrl(body.repository);
+      if (applications.some(item => { const url = projectUrl(item); return url && canonicalProjectUrl(url) === key; })) return { duplicate: true };
+      const now = new Date().toISOString();
+      applications.unshift({
+        name: body.name, location: body.location, focus: body.focus, bio: body.bio, repository: body.repository,
+        id: applications.reduce((id, item) => Math.max(id, item.id + 1), Date.now()),
+        handle: `@${body.name.toLowerCase().replace(/\s+/g, ".")}`,
+        status: "Nouveau", color: "#87456a", initials: body.name.split(/\s+/).map(word => word[0]).join("").slice(0, 2).toUpperCase(),
+        time: "à l’instant", createdAt: now, consentAt: now,
+      });
+      return { duplicate: false };
+    });
+    // Do not expose a previous submitter's personal information on duplicate links.
+    return NextResponse.json({ ok: true, ...result }, { status: result.duplicate ? 200 : 201 });
+  } catch (error) { return apiError(error); }
+}

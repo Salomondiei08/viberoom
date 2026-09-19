@@ -1,18 +1,23 @@
-import { promises as fs } from "node:fs";
-import path from "node:path";
 import { NextResponse } from "next/server";
-import { cookieName, verifySession } from "../../../../lib/auth";
-
-const dataPath = path.join(process.cwd(), "data", "applications.json");
-
-export const PATCH = async (request: Request, context: { params: Promise<{ id: string }> }) => {
-  if (!verifySession(request.headers.get("cookie")?.match(new RegExp(`${cookieName}=([^;]+)`))?.[1])) return NextResponse.json({ error: "Accès administrateur requis." }, { status: 401 });
-  const { id } = await context.params;
-  const patch = await request.json() as { status?: string };
-  const applications = JSON.parse(await fs.readFile(dataPath, "utf8")) as Array<{ id: number; status: string }>;
-  const index = applications.findIndex((application) => application.id === Number(id));
-  if (index < 0) return NextResponse.json({ error: "Candidature introuvable." }, { status: 404 });
-  applications[index] = { ...applications[index], ...patch };
-  await fs.writeFile(dataPath, JSON.stringify(applications, null, 2), "utf8");
-  return NextResponse.json(applications[index]);
-};
+import { requireAdmin } from "../../../../lib/auth";
+import { Application, isApplication, statusSchema } from "../../../../lib/applications";
+import { changeStore } from "../../../../lib/storage";
+import { apiError, HttpError, rateLimit, readJson, requireSameOrigin } from "../../../../lib/http";
+export async function PATCH(request: Request, context: { params: Promise<{ id: string }> }) {
+  try {
+    requireSameOrigin(request);
+    await requireAdmin(request);
+    await rateLimit(request, "status", 120, 60 * 1000);
+    const { id } = await context.params;
+    if (!/^\d+$/.test(id) || !Number.isSafeInteger(Number(id))) throw new HttpError(400, "Identifiant invalide.");
+    const { status } = statusSchema.parse(await readJson(request, 1024));
+    const application = await changeStore<Application[], Application>("applications.json", [], applications => {
+      if (!Array.isArray(applications) || !applications.every(isApplication)) throw new Error("Invalid store");
+      const item = applications.find(application => application.id === Number(id));
+      if (!item) throw new HttpError(404, "Projet introuvable.");
+      item.status = status;
+      return item;
+    });
+    return NextResponse.json(application);
+  } catch (error) { return apiError(error); }
+}

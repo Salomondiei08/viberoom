@@ -2,12 +2,30 @@ services:
   viberoom:
     build: .
     restart: unless-stopped
+    user: "${APP_UID:-1001}:${APP_GID:-1001}"
     ports:
       - "127.0.0.1:3006:3000"
     environment:
       NODE_ENV: production
+      APP_ORIGIN: https://vibecode.reinvent-labs.com
+      TRUST_PROXY: "true"
       ADMIN_EMAIL: ${ADMIN_EMAIL}
-      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-}
+      ADMIN_PASSWORD_HASH: ${ADMIN_PASSWORD_HASH:-}
       AUTH_SECRET: ${AUTH_SECRET}
     volumes:
       - ./data:/app/data
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    read_only: true
+    tmpfs:
+      - /tmp:size=32m,mode=1777
+    pids_limit: 128
+    mem_limit: 768m
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"

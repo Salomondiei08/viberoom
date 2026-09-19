@@ -1,5 +1,15 @@
 # Version history
 
+## 0.4.0 — 2026-09-19
+
+- Authentification renforcée : aucun secret de secours, sessions révocables, expiration de 8 heures, cookies stricts et limitation persistante des tentatives.
+- Validation stricte des formulaires et statuts, contrôle d’origine, limites de taille, liens sûrs, consentement et détection des doublons.
+- Écritures verrouillées et atomiques : conservation des projets lors d’envois simultanés et absence d’écrasement des données corrompues.
+- Dashboard dédié à /dashboard avec recherche, filtres, états vides, actualisation, liens de projets et retours d’erreur fiables.
+- Confirmation d’envoi accessible, formulaire réinitialisé, indicateur de chargement, navigation mobile, contraste et compte à rebours.
+- En-têtes de sécurité, lecteur TikTok isolé, dépendance PostCSS corrigée, image Docker minimale sans secrets ni données et exécution non-root.
+- Ajout des tests Jest de sécurité et des parcours Playwright avec audit axe et vérification des largeurs 320–1280 px.
+
 ## 0.3.2 — 2026-09-19
 
 - Removed the generic TikTok banner and fictional hero project counter; the official live-event link is now the single live call to action.
