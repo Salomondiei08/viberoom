@@ -19,15 +19,23 @@
     "proper-lockfile": "^4.1.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-globe.gl": "^2.38.0",
+    "three": "^0.186.0",
+    "topojson-client": "^3.1.0",
     "typescript": "^5.7.0",
+    "world-atlas": "^2.0.2",
     "zod": "^4.6.5"
   },
-  "overrides": { "postcss": "^8.5.28" },
+  "overrides": {
+    "postcss": "^8.5.28"
+  },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",
     "@playwright/test": "^1.63.0",
     "@types/jest": "^30.0.0",
     "@types/proper-lockfile": "^4.1.4",
+    "@types/three": "^0.186.0",
+    "@types/topojson-client": "^3.1.5",
     "jest": "^30.5.2"
   }
 }

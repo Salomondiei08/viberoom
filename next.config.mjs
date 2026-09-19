@@ -5,7 +5,7 @@ const csp = [
   "default-src 'self'",
   "script-src 'self' 'unsafe-inline'" + (process.env.NODE_ENV === "development" ? " 'unsafe-eval'" : ""),
   "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' data:",
+  "img-src 'self' data: https://unpkg.com",
   "font-src 'self'",
   "connect-src 'self'",
   "frame-src https://www.tiktok.com",

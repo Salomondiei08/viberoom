@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowUpRight, Inbox, LoaderCircle, LogOut, RefreshCw, Search } from "lucide-react";
 import { Application, isApplication, projectUrl, Status, statuses } from "../lib/applications";
 import { requestJson, RequestError } from "../lib/client";
+import AnalyticsOverview from "./analytics-overview";
 
 const statusStyle: Record<Status, string> = { Nouveau: "status-new", "À suivre": "status-follow-up", Jugé: "status-judged" };
 function dateLabel(application: Application) {
@@ -114,6 +115,7 @@ export default function Dashboard() {
     <div className="admin-body">
       {error && <p className="form-error" role="alert">{error}</p>}
       {notice && <p className="save-notice" role="status">{notice}</p>}
+      <AnalyticsOverview applications={applications} onProjectSelect={setSelectedId} />
       <div className="admin-toolbar"><label className="search-field"><Search size={18} aria-hidden="true" /><span className="sr-only">Rechercher un projet</span><input type="search" value={query} onChange={event => setQuery(event.target.value)} placeholder="Projet, créateur, ville…" /></label><button className="button button-outline" disabled={loading || busy} onClick={() => void load()}><RefreshCw size={16} className={loading ? "spin" : ""} /> Actualiser</button></div>
       <div className="filter-tabs admin-filters" aria-label="Filtrer les projets">{(["Toutes", ...statuses] as const).map(status => <button key={status} aria-pressed={filter === status} className={filter === status ? "selected" : ""} onClick={() => setFilter(status)}>{status}<span>{status === "Toutes" ? applications.length : applications.filter(item => item.status === status).length}</span></button>)}</div>
       {loading && <p role="status">Chargement des projets…</p>}

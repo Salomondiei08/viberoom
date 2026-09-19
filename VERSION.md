@@ -15,6 +15,11 @@
 - Le lien de chaque projet est maintenant affiché dans une carte séparée du détail, visible, cliquable et copiable depuis le dashboard.
 - Les tags du dashboard sont désormais « Nouveau », « À suivre » et « Jugé » ; toute nouvelle soumission arrive en « Nouveau ».
 
+## 0.5.0 — 2026-09-19
+
+- Ajout d’un centre analytics privé avec métriques réelles, activité sur 7 jours, répartition par pays et drilldown vers les projets.
+- Ajout d’un globe 3D WebGL avec frontières réelles, points de localisation reconnus et sélection directe des projets.
+
 ## 0.3.2 — 2026-09-19
 
 - Removed the generic TikTok banner and fictional hero project counter; the official live-event link is now the single live call to action.

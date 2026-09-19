@@ -52,6 +52,8 @@ test('submission confirms, duplicate is harmless, admin filters persist changes 
   await page.getByLabel('Email', { exact: true }).fill('qa@example.test');
   await page.getByLabel('Mot de passe', { exact: true }).fill(process.env.E2E_PASSWORD!);
   await page.getByRole('button', { name: 'Se connecter', exact: true }).click();
+  await expect(page.getByRole('heading', { name: 'Les projets, en mouvement.' })).toBeVisible();
+  await expect(page.getByLabel('Globe 3D des pays des projets')).toBeVisible();
   await expect(page.getByRole('link', { name: 'Ouvrir le projet', exact: true })).toHaveAttribute('href', 'https://example.test/qa-project');
   await expect(page.locator('.project-url')).toHaveText('https://example.test/qa-project');
   await expect(page.locator('.project-url')).toHaveAttribute('href', 'https://example.test/qa-project');
