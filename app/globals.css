@@ -150,14 +150,24 @@ section[id] { scroll-margin-top:24px; }
 .admin-shell .applicant-summary strong { font-size:16px; }
 .admin-shell .applicant-summary span { color:#58675c; font-size:13px; }
 .status-pill { font-size:12px; }
-.status-new { color:#903a20; }.status-shortlisted { color:#2b614a; }.status-review { color:#71500b; }
+.status-new { color:#903a20; }.status-follow-up { color:#2b614a; }.status-judged { color:#71500b; }
 .empty-state { padding:40px 24px; text-align:center; color:#58675c; line-height:1.6; }
 .empty-state h2 { font-size:20px; color:#18231f; }
 .project-title { font-size:26px; margin:20px 0 10px; overflow-wrap:anywhere; }
 .project-author { color:#58675c; overflow-wrap:anywhere; }
-.project-link { display:flex; margin-top:24px; }
+.project-url-card { margin-top:24px; padding:18px; border:1px solid #c9d2cb; border-radius:8px; background:#f3f7f3; }
+.project-url-heading { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.project-url-kind { color:#4b6756; font-size:11px; }
+.project-url { display:block; margin-top:10px; color:#1d684e; font-size:15px; line-height:1.5; overflow-wrap:anywhere; text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:3px; }
+.project-url:hover { color:#a4412c; }
+.project-url-actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:16px; }
+.project-link { display:inline-flex; margin-top:0; }
+.project-url-actions .button-outline { min-height:46px; padding:0 16px; }
 .detail-section h3 { font-size:14px; }
-.admin-shell .detail-section p { font-size:16px; white-space:pre-wrap; overflow-wrap:anywhere; }
+  .admin-shell .detail-section p { font-size:16px; white-space:pre-wrap; overflow-wrap:anywhere; }
+  .project-url-card { padding:14px; }
+  .project-url-actions { display:grid; grid-template-columns:1fr 1fr; }
+  .project-url-actions .button { width:100%; padding:0 8px; }
 .admin-shell .detail-footer { flex-direction:column; align-items:flex-start; gap:18px; color:#58675c; font-size:12px; }
 .status-actions { flex-wrap:wrap; gap:8px; }
 .status-actions button { min-height:44px; padding:8px 12px; font-size:13px; color:#435548; }

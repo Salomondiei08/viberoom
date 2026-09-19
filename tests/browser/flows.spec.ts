@@ -53,10 +53,12 @@ test('submission confirms, duplicate is harmless, admin filters persist changes 
   await page.getByLabel('Mot de passe', { exact: true }).fill(process.env.E2E_PASSWORD!);
   await page.getByRole('button', { name: 'Se connecter', exact: true }).click();
   await expect(page.getByRole('link', { name: 'Ouvrir le projet', exact: true })).toHaveAttribute('href', 'https://example.test/qa-project');
-  await page.getByRole('button', { name: 'Sélectionné', exact: true }).click();
+  await expect(page.locator('.project-url')).toHaveText('https://example.test/qa-project');
+  await expect(page.locator('.project-url')).toHaveAttribute('href', 'https://example.test/qa-project');
+  await page.getByRole('button', { name: 'À suivre', exact: true }).click();
   await expect(page.getByRole('status')).toHaveText('Statut enregistré.');
   await page.reload();
-  await expect(page.getByRole('button', { name: 'Sélectionné', exact: true })).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.getByRole('button', { name: 'À suivre', exact: true })).toHaveAttribute('aria-pressed', 'true');
   await page.getByRole('button', { name: 'Nouveau 0', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Aucun résultat' })).toBeVisible();
   await page.getByRole('button', { name: 'Toutes 1', exact: true }).click();

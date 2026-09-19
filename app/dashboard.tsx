@@ -5,7 +5,7 @@ import { ArrowUpRight, Inbox, LoaderCircle, LogOut, RefreshCw, Search } from "lu
 import { Application, isApplication, projectUrl, Status, statuses } from "../lib/applications";
 import { requestJson, RequestError } from "../lib/client";
 
-const statusStyle: Record<Status, string> = { Nouveau: "status-new", Sélectionné: "status-shortlisted", "À étudier": "status-review" };
+const statusStyle: Record<Status, string> = { Nouveau: "status-new", "À suivre": "status-follow-up", Jugé: "status-judged" };
 function dateLabel(application: Application) {
   const date = new Date(application.createdAt || application.id);
   return application.createdAt || application.id > 1e12 ? date.toLocaleString("fr-FR", { dateStyle: "medium", timeStyle: "short", timeZone: "UTC" }) + " GMT" : "Ancien envoi";
@@ -30,7 +30,7 @@ export default function Dashboard() {
     try {
       const data = await requestJson("/api/applications");
       if (!Array.isArray(data) || !data.every(isApplication)) throw new Error("La liste des projets n’a pas pu être chargée.");
-      setApplications(data.map(item => ({ ...item, status: ({ New: "Nouveau", Shortlisted: "Sélectionné", Review: "À étudier" } as Record<string, Status>)[item.status] || item.status })));
+      setApplications(data.map(item => ({ ...item, status: ({ New: "Nouveau", Shortlisted: "À suivre", Review: "Jugé", "Sélectionné": "À suivre", "À étudier": "Jugé" } as Record<string, Status>)[item.status] || item.status })));
     } catch (failure) {
       if (failure instanceof RequestError && failure.status === 401) { setAuth("out"); setApplications([]); }
       setError((failure as Error).message);
@@ -102,6 +102,13 @@ export default function Dashboard() {
   </div></main>;
 
   const url = selected && projectUrl(selected);
+  async function copyProjectUrl() {
+    if (!url) return;
+    try {
+      await navigator.clipboard.writeText(url);
+      setNotice("Lien copié.");
+    } catch { setError("Impossible de copier le lien. Tu peux le sélectionner directement."); }
+  }
   return <main id="main" className="admin-shell">
     <header className="admin-header"><div><Link href="/" className="brand-lockup">VIBE<span className="brand-accent">ROOM</span></Link><h1>Projets reçus <span>{applications.length}</span></h1></div><div className="admin-actions"><Link className="button button-dark" href="/">Voir le site <ArrowUpRight size={16} /></Link><button className="button button-outline" disabled={busy} onClick={() => void logout()}><LogOut size={16} /> Se déconnecter</button></div></header>
     <div className="admin-body">
@@ -118,7 +125,11 @@ export default function Dashboard() {
         <section className="detail-panel" aria-label="Détail du projet">{selected ? <>
           <span className="detail-label">Détail du projet</span><h2 className="project-title">{selected.focus}</h2><p className="project-author">{selected.name} · {selected.location}</p>
           <span className={`status-pill ${statusStyle[selected.status] || "status-new"}`}>{selected.status}</span>
-          {url && <a className="button button-dark project-link" href={url} target="_blank" rel="noopener noreferrer">Ouvrir le projet <ArrowUpRight size={16} /></a>}
+          {url && <div className="project-url-card">
+            <div className="project-url-heading"><span className="detail-label">Lien du projet</span><span className="project-url-kind">Lien externe sécurisé</span></div>
+            <a className="project-url" href={url} target="_blank" rel="noopener noreferrer" title={`Ouvrir ${url}`}>{url}</a>
+            <div className="project-url-actions"><a className="button button-dark project-link" href={url} target="_blank" rel="noopener noreferrer">Ouvrir le projet <ArrowUpRight size={16} /></a><button className="button button-outline" type="button" onClick={() => void copyProjectUrl()}>Copier le lien</button></div>
+          </div>}
           <div className="detail-section"><h3>Description</h3><p>{selected.bio.replace(/ — Dépôt : https?:\/\/\S+\s*$/, "")}</p></div>
           <div className="detail-footer"><span>Reçu le {dateLabel(selected)}</span><div className="status-actions" aria-label="Changer le statut">{statuses.map(status => <button key={status} disabled={busy} aria-pressed={selected.status === status} className={selected.status === status ? "current" : ""} onClick={() => void updateStatus(status)}>{status}</button>)}</div></div>
         </> : <div className="empty-state"><p>Sélectionne un projet pour le découvrir.</p></div>}</section>

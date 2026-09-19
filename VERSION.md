@@ -10,6 +10,11 @@
 - En-têtes de sécurité, lecteur TikTok isolé, dépendance PostCSS corrigée, image Docker minimale sans secrets ni données et exécution non-root.
 - Ajout des tests Jest de sécurité et des parcours Playwright avec audit axe et vérification des largeurs 320–1280 px.
 
+## 0.4.1 — 2026-09-19
+
+- Le lien de chaque projet est maintenant affiché dans une carte séparée du détail, visible, cliquable et copiable depuis le dashboard.
+- Les tags du dashboard sont désormais « Nouveau », « À suivre » et « Jugé » ; toute nouvelle soumission arrive en « Nouveau ».
+
 ## 0.3.2 — 2026-09-19
 
 - Removed the generic TikTok banner and fictional hero project counter; the official live-event link is now the single live call to action.

@@ -28,7 +28,7 @@ afterEach(async () => { await rm(directory, { recursive: true, force: true }); }
 test('private list and mutation reject anonymous and malformed sessions', async () => {
   for (const cookie of [undefined, 'invalid', 'x.' + 'é'.repeat(64), 'x.y.z']) {
     expect((await list(request('/api/applications', undefined, cookie, 'GET'))).status).toBe(401);
-    expect((await patch(request('/api/applications/1', { status: 'Sélectionné' }, cookie, 'PATCH'), { params: Promise.resolve({ id: '1' }) })).status).toBe(401);
+    expect((await patch(request('/api/applications/1', { status: 'À suivre' }, cookie, 'PATCH'), { params: Promise.resolve({ id: '1' }) })).status).toBe(401);
   }
 });
 test('missing signing secret fails closed', async () => {
@@ -59,7 +59,7 @@ test('cross-site login, logout and submission are rejected', async () => {
   for (const handler of [submit, login, logout]) expect((await handler(request('/api/test', payload, undefined, 'POST', { Origin: 'https://evil.example' }))).status).toBe(403);
 });
 test('invalid fields, unsafe URLs, missing consent and injected status are rejected', async () => {
-  for (const body of [{ ...payload, name: {} }, { ...payload, repository: 'javascript:alert(1)' }, { ...payload, consent: false }, { ...payload, status: 'Sélectionné' }, { ...payload, bio: 'x' }, { ...payload, website: 'spam' }]) {
+  for (const body of [{ ...payload, name: {} }, { ...payload, repository: 'javascript:alert(1)' }, { ...payload, consent: false }, { ...payload, status: 'À suivre' }, { ...payload, bio: 'x' }, { ...payload, website: 'spam' }]) {
     expect((await submit(request('/api/applications', body))).status).toBe(400);
   }
 });
@@ -86,9 +86,9 @@ test('status API rejects mass assignment and saves a valid change', async () => 
   const rows = JSON.parse(await readFile(path.join(directory, 'applications.json'), 'utf8'));
   const cookie = await createSession(process.env.ADMIN_EMAIL!);
   const context = { params: Promise.resolve({ id: String(rows[0].id) }) };
-  expect((await patch(request('/api/applications/1', { status: 'Sélectionné', name: 'Hacked' }, cookie, 'PATCH'), context)).status).toBe(400);
-  const response = await patch(request('/api/applications/1', { status: 'Sélectionné' }, cookie, 'PATCH'), context);
-  expect(response.status).toBe(200); expect((await response.json()).status).toBe('Sélectionné');
+  expect((await patch(request('/api/applications/1', { status: 'À suivre', name: 'Hacked' }, cookie, 'PATCH'), context)).status).toBe(400);
+  const response = await patch(request('/api/applications/1', { status: 'À suivre' }, cookie, 'PATCH'), context);
+  expect(response.status).toBe(200); expect((await response.json()).status).toBe('À suivre');
 });
 test('corrupt storage is preserved rather than silently erased', async () => {
   const filename = path.join(directory, 'applications.json');

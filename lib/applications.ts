@@ -1,5 +1,5 @@
 import { z } from "zod";
-export const statuses = ["Nouveau", "Sélectionné", "À étudier"] as const;
+export const statuses = ["Nouveau", "À suivre", "Jugé"] as const;
 export type Status = typeof statuses[number];
 export type Application = { id: number; name: string; location: string; focus: string; bio: string; status: Status; repository?: string; createdAt?: string; consentAt?: string; handle: string; initials: string; color: string; time: string };
 
